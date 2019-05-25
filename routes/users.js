@@ -32,5 +32,15 @@ to be sent to the client*/
         (err, users) => res.send(users));
 });
 
-module.exports = router;
 
+//Find user based on the username;
+router.get('/users/:username', (req, res) => {
+   userModel.find(
+       {username: req.params.username}, //Extract username from req.params
+       {isAdmin: 1, firstName: 1, lastName: 1, username: 1, email: 1, _id: 0},
+       (err, user) => res.send(user)
+   );
+});
+
+
+module.exports = router;
