@@ -39,7 +39,7 @@ yarn:
 
 ## NodeJS Installtion ##
 
-[Download NodeJS for you platform](https://nodejs.org/en/download/) 
+[Download NodeJS for your platform](https://nodejs.org/en/download/) 
 
 
 ## Required tools to install ##
