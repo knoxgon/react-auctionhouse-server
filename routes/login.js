@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
         }
         res.send({message: "Success"});
     }catch (e) {
-        res.send({message: e.message});
+        res.send({message: "Internal Server Error"});
     }
 });
 
