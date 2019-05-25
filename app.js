@@ -2,6 +2,8 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var uuid = require('uuid');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -20,10 +22,20 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(session({
+  genid: uuid.v4,
+  secret: 'myTempSecKey',
+  resave: false,
+  saveUninitialized: true
+}));
+
 
 app.use(indexRouter);
 app.use(usersRouter);
@@ -35,6 +47,7 @@ app.use('**', notFoundRoute);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 // error handler
 app.use(function(err, req, res, next) {
