@@ -1,0 +1,33 @@
+{
+  "link": {
+    "url": "mongodb://localhost",
+    "c_port": ":27017",
+    "port": "27017"
+  },
+
+  "api": [
+    {
+      "s_root": "/api",
+      "root": "api"
+    },
+    {
+      "s_keys": "/keys",
+      "keys": "keys"
+    },
+    {
+      "s_tmpToken": "/tmpToken",
+      "tmpToken": "tmpToken"
+    }
+  ],
+
+  "customer": [
+    {
+      "s_db": "/customer",
+      "db": "customer"
+    },
+    {
+      "s_user": "/user",
+      "user": "user"
+    }
+  ]
+}
