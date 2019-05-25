@@ -3,8 +3,13 @@ const router = express.Router();
 
 const userModel = require('../models/user-model');
 
+const bcrypt = require('bcrypt');
+
+const excludeFields = {password: 0, _id: 0, __v: 0};
+
 //Create user based on Joi Validator
 router.post('/users', (req, res) => {
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
     let user = new userModel(req.body);
     let userResult = user.joiValidate(req.body);
     if(userResult[0]){
@@ -15,21 +20,17 @@ router.post('/users', (req, res) => {
         let arrs = userResult[1].message.split('. ');
         let newList = [];
         for(var i = 0; i < arrs.length; i++){
-            newList.push(JSON.stringify({errorMessage : arrs[i]}).replace(/[\\'"]+/g, ''));
+            newList.push(JSON.stringify(
+                {errorMessage : arrs[i]})
+                .replace(/[\\'"]+/g, ''));
         }
         res.status(400).send(newList);
     }
 });
 
 router.get('/users', (req, res) => {
-/*We exclude _id from sending to the client.
-Mongo is automatically adding it if not stated otherwise
-The password is not within the scope of the parameters
-thus no need to include it
-We want, isAdmin, firstName, lastName, username, email
-to be sent to the client*/
-    userModel.find({}, {isAdmin: 1, firstName: 1, lastName: 1, username: 1, email: 1, _id: 0},
-        (err, users) => res.send(users));
+/*We want to extract everything but password, id, and version*/
+    userModel.find({}, excludeFields, (err, users) => res.send(users));
 });
 
 
@@ -37,10 +38,10 @@ to be sent to the client*/
 router.get('/users/:username', (req, res) => {
    userModel.find(
        {username: req.params.username}, //Extract username from req.params
-       {isAdmin: 1, firstName: 1, lastName: 1, username: 1, email: 1, _id: 0},
-       (err, user) => res.send(user)
+       excludeFields,(err, user) => res.send(user)
    );
 });
 
+//Change password
 
 module.exports = router;
