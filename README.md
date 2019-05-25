@@ -4,8 +4,7 @@ backend, nodejs, mongodb, mongoose, express, expressjs, Joi, JoiValidator, node
 ## This application is intended to be a core backend firmware to support traffic to another frontend site which I'm currently building ##
 
 Used toolkits:
- 
- * [NodeJS]
+
  * ExpressJS,
  * Joi
  * mongoose
