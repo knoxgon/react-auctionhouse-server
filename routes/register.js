@@ -8,11 +8,11 @@ const bcrypt = require('bcrypt');
 //Create user based on Joi Validator
 router.post('/register', (req, res) => {
     //Validate username
-    let invalidUsername = new RegExp(/[~`!#$%^()€¤äåö&*+@=\-\[\]\\';,/{}|":<>?]/)
+    let invalidUsername = new RegExp(/[ ~`!#$%^()€¤äå._ö&*+@=\-\[\]\\';,/{}|":<>?]/)
                             .test(req.body.username);
     //Validate password
     if(req.body.password.length < 8) {
-        res.status(400).send({message: 'Password length must be 8 or more characters'})
+        res.status(400).send({message: 'Password length must be 8 or more characters'});
         return;
     }
     if(!invalidUsername) {
