@@ -33,20 +33,23 @@ const UserSchema = new Schema( {
         type: String,
         required: true,
         minLength: 6,
-        maxLength: 16
+        maxLength: 16,
+        lowercase: true,
+        trim: true,
+        unique: true
     },
     email: {
         type: String,
         required: true,
         minLength: 8,
         maxLength: 150,
+        lowercase: true,
+        trim: true,
         unique: true
     },
     password: {
         type: String,
-        required: true,
-        minLength: 8,
-        maxLength: 24
+        required: true
     }
 });
 
@@ -57,7 +60,7 @@ UserSchema.methods.joiValidate = function(user){
         lastName: Joi.string().min(3).max(30).required(),
         username: Joi.string().min(6).max(16).required(),
         email: Joi.string().email().required(),
-        password: Joi.string().min(8).max(24).required(),
+        password: Joi.string().required(),
     });
 
     let retVal = Joi.validate(user, schema, { abortEarly: false });
