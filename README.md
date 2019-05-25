@@ -11,6 +11,7 @@ Used toolkits:
  * mongoose
  * mongodb
  * body-parser
+ * bcrypt
  
  ### Uses ###
  
@@ -23,6 +24,8 @@ Used toolkits:
  *mongoose* is modelling library that manages relationships between information, provides schema validation, and is used to translate between objects in MongoDB.
  
  *body-parser* is a middleware which infuses the body portion of a request stream and displays it on req.body. Without this firmware, it would take several boiler-plate code to extract, confirm, index the information out of the request body.
+ 
+ *bcrypt* is an authentication and password hashing security middleware which hashes user's password.
 
 ## NodeJS Installtion ##
 
@@ -60,6 +63,11 @@ mongoose
 npm install mongoose
 ```
 
+bcrypt
+```
+npm install bcrypt
+```
+
 ### If you are using yarn, run the following code using a terminal. ###
 
 body-parser
@@ -85,4 +93,9 @@ yarn add mongodb
 mongoose
 ```
 yarn add mongoose
+```
+
+bcrypt
+```
+yarn add bcrypt
 ```
