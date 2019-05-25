@@ -19,7 +19,7 @@ Used toolkits:
  
  *ExpressJS* helps to build the initial HTTP routes which is otherwise redundant to do in raw NodeJS fashion.
  
- *mongodb* MongoDB driver
+ *mongodb* MongoDB driver for NodeJS
  
  *mongoose* is modelling library that manages relationships between information, provides schema validation, and is used to translate between objects in MongoDB.
  
