@@ -1,11 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const userModel = require('../models/register-user');
-
-router.get('/users', (req, res) => {
-    res.send({TYPE: 'GET'});
-});
+const userModel = require('../models/user-model');
 
 //Create user based on Joi Validator
 router.post('/users', (req, res) => {
@@ -25,6 +21,16 @@ router.post('/users', (req, res) => {
     }
 });
 
+router.get('/users', (req, res) => {
+/*We exclude _id from sending to the client.
+Mongo is automatically adding it if not stated otherwise
+The password is not within the scope of the parameters
+thus no need to include it
+We want, isAdmin, firstName, lastName, username, email
+to be sent to the client*/
+    userModel.find({}, {isAdmin: 1, firstName: 1, lastName: 1, username: 1, email: 1, _id: 0},
+        (err, users) => res.send(users));
+});
 
 module.exports = router;
 
