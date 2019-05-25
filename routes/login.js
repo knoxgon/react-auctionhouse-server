@@ -8,22 +8,20 @@ const bcrypt = require('bcrypt');
 
 router.post('/login', async (req, res) => {
     try {
-        let globalAlias;
+        let username;
         if(req.body.username != null) {
-            const username = await userModel.findOne({username: req.body.username}).exec();
-            globalAlias = username;
+            username = await userModel
+                .findOne(
+                    {$or: [
+                        {username: req.body.username},
+                        {email: req.body.username}
+                    ]}
+                ).exec();
             if(!username){
                 return res.status(400).send({message: "No such user"})
             }
         }
-        if(req.body.email != null){
-            const email = await userModel.findOne({email: req.body.email}).exec();
-            globalAlias = email;
-            if(!email) {
-                return res.status(400).send({message: "No such email"})
-            }
-        }
-        if(!bcrypt.compareSync(req.body.password, globalAlias.password)) {
+        if(!bcrypt.compareSync(req.body.password, username.password)) {
             return res.status(400).send({message: "Wrong password"})
         }
         res.send({message: "Success"});
