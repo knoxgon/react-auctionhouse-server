@@ -57,7 +57,7 @@ UserSchema.methods.joiValidate = function(user){
         lastName: Joi.string().min(3).max(30).required(),
         username: Joi.string().min(6).max(16).required(),
         email: Joi.string().email().required(),
-        password: Joi.string().min(2).max(24).required(),
+        password: Joi.string().min(8).max(24).required(),
     });
 
     let retVal = Joi.validate(user, schema, { abortEarly: false });
