@@ -32,7 +32,7 @@ Used toolkits:
 ## Required tools to install ##
 
 
-If you are using npm, run the following code using a terminal.
+### If you are using npm, run the following code using a terminal. ###
 
 
 body-parser
@@ -41,13 +41,11 @@ npm install body-parser
 ```
 
 The original Joi package is deprecated. Use **@hapi/joi** instead
-
 ```
 npm install @hapi/joi
 ```
 
 expressJS
-
 ```
 npm install express
 ```
@@ -60,4 +58,31 @@ npm install mongodb
 mongoose
 ```
 npm install mongoose
+```
+
+### If you are using yarn, run the following code using a terminal. ###
+
+body-parser
+```
+yarn add body-parser
+```
+
+The original Joi package is deprecated. Use **@hapi/joi** instead
+```
+yarn add @hapi/joi
+```
+
+expressJS
+```
+yarn add express
+```
+
+mongodb
+```
+yarn add mongodb
+```
+
+mongoose
+```
+yarn add mongoose
 ```
