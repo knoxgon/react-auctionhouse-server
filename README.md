@@ -13,6 +13,17 @@ Used toolkits:
  * body-parser
  * bcrypt
  
+### Developer's friend ###
+* nodemon - Automatically detect changes. You won't have to restart your node application to test the new logic.
+
+Save to dev dependency
+
+npm:
+``npm install --save-dev nodemon``
+
+yarn:
+``yarn add nodemon --dev``
+
  ### Uses ###
  
  *Joi* is a validator that supports and ensures the validation of information that is gathered from external source into mongodb. It controls the provided fields and ensures the fields are matching user's database policy.
