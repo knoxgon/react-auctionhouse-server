@@ -1,5 +1,5 @@
-# ngscanner-backend
-backend, nodejs, mongodb, mongoose, express, expressjs, Joi, JoiValidator, node
+# ExpressJS Backend
+backend, nodejs, mongodb, mongoose, express, expressjs, Joi, JoiValidator, node, jwt, jsonwebtoken
 
 ## This application is intended to be a core backend firmware to support traffic to another frontend site which I'm currently building ##
 
