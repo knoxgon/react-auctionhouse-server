@@ -37,6 +37,8 @@ yarn:
  *body-parser* is a middleware which infuses the body portion of a request stream and displays it on req.body. Without this firmware, it would take several boiler-plate code to extract, confirm, index the information out of the request body.
  
  *bcrypt* is an authentication and password hashing security middleware which hashes user's password.
+ 
+ *jsonwebtoken* is a token factory which is used to validate generated, often user tokens, to a gateway.
 
 ## NodeJS Installtion ##
 
