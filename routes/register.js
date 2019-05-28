@@ -2,20 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const userModel = require('../models/user-model');
+const usernameCheck = require('../utils/validator');
 
 const bcrypt = require('bcrypt');
 
 //Create user based on Joi Validator
 router.post('/register', (req, res) => {
     //Validate username
-    let invalidUsername = new RegExp(/[ ~`!#$%^()€¤äå._ö&*+@=\-\[\]\\';,/{}|":<>?]/)
-                            .test(req.body.username);
+    let result = usernameCheck(req.body.username);
+    console.log(result);
     //Validate password
     if(req.body.password.length < 8) {
-        res.status(400).send({message: 'Password length must be 8 or more characters'});
-        return;
+        return res.status(400).send({message: 'Password length must be 8 or more characters'});
     }
-    if(!invalidUsername) {
+    if(result) {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
         let user = new userModel(req.body);
         let userResult = user.joiValidate(req.body);
