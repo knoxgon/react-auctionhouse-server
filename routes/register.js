@@ -12,10 +12,10 @@ router.post('/register', (req, res) => {
     let result = usernameCheck(req.body.username);
     console.log(result);
     //Validate password
-    if(req.body.password.length < 8) {
-        return res.status(400).send({message: 'Password length must be 8 or more characters'});
+    if (req.body.password.length < 8) {
+        return res.status(400).send({ message: 'Password length must be 8 or more characters' });
     }
-    if(result) {
+    if (result) {
         req.body.password = bcrypt.hashSync(req.body.password, 10);
         let user = new userModel(req.body);
         let userResult = user.joiValidate(req.body);
@@ -29,13 +29,13 @@ router.post('/register', (req, res) => {
             let newList = [];
             for (var i = 0; i < arrs.length; i++) {
                 newList.push(JSON.stringify(
-                    {errorMessage: arrs[i]})
+                    { errorMessage: arrs[i] })
                     .replace(/[\\'"]+/g, ''));
             }
             res.status(400).send(newList);
         }
     } else {
-        res.status(400).send({message: 'username cannot contain special characters'});
+        res.status(400).send({ message: 'username cannot contain special characters' });
     }
 });
 
