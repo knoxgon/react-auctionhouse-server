@@ -11,6 +11,7 @@ Used toolkits:
  * mongodb
  * body-parser
  * bcrypt
+ * jsonwebtoken
  
 ### Developer's friend ###
 * nodemon - Automatically detect changes. You won't have to restart your node application to test the new logic.
@@ -45,27 +46,47 @@ yarn:
 ## Required tools to install ##
 
 
-### If you are using npm, run the following code using a terminal. ###
+### If you are using npm or yarn: ###
 
 
 body-parser
+
 ```
 npm install body-parser
 ```
 
+```
+yarn add body-parser
+```
+
 The original Joi package is deprecated. Use **@hapi/joi** instead
+
 ```
 npm install @hapi/joi
 ```
 
+```
+yarn add @hapi/joi
+```
+
 expressJS
+
 ```
 npm install express
 ```
 
+```
+yarn add express
+```
+
 mongodb
+
 ```
 npm install mongodb
+```
+
+```
+yarn add mongodb
 ```
 
 mongoose
@@ -73,39 +94,24 @@ mongoose
 npm install mongoose
 ```
 
-bcrypt
-```
-npm install bcrypt
-```
-
-### If you are using yarn, run the following code using a terminal. ###
-
-body-parser
-```
-yarn add body-parser
-```
-
-The original Joi package is deprecated. Use **@hapi/joi** instead
-```
-yarn add @hapi/joi
-```
-
-expressJS
-```
-yarn add express
-```
-
-mongodb
-```
-yarn add mongodb
-```
-
-mongoose
 ```
 yarn add mongoose
 ```
 
 bcrypt
 ```
+npm install bcrypt
+```
+
+```
 yarn add bcrypt
+```
+
+jsonwebtoken (JWT)
+```
+npm install jsonwebtoken
+```
+
+```
+yarn add jsonwebtoken
 ```
