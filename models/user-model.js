@@ -2,15 +2,17 @@ const rootURL = require('../dbRelation/root-db');
 const custDB = require('../dbRelation/customer-db');
 
 const mongoose = require('mongoose'),
-                 Schema = mongoose.Schema,
-                 bcrypt = require('bcrypt'),
-                 SALT_WORK_FACTOR = 10;
+                 Schema = mongoose.Schema;
 
 const Joi = require('@hapi/joi');
 
-mongoose.connect(rootURL.link.url + custDB.custUrl.s_db)
-    .catch((err) => console.log('DB error'))
-    .then((res) => console.log('Connection OK'));
+mongoose.connect(rootURL.link.url + custDB.custUrl.s_db);
+
+mongoose.connection.on('close', () => console.log('DB Close called'));
+
+mongoose.connection.on('connected', () => console.log('DB Connect called'));
+
+mongoose.connection.on('error', () => console.log('DB Connection error'));
 
 const UserSchema = new Schema( {
     isAdmin: {
