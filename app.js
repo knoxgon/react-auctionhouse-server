@@ -1,14 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
-var registerRouter = require('./routes/register');
+var salesRouter = require('./routes/sales');
 var notFoundRoute = require('./routes/404');
+var registerRouter = require('./routes/register');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -37,6 +37,7 @@ app.use(function (req, res, next) {
 app.use(indexRouter);
 app.use(usersRouter);
 app.use(loginRouter);
+app.use(salesRouter);
 app.use(registerRouter);
 app.use('**', notFoundRoute);
 
