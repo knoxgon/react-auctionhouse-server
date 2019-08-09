@@ -8,6 +8,25 @@ const bcrypt = require('bcrypt');
 
 const asyncmw = require('../utils/async-middleware');
 
+/*
+    {
+        "isAdmin": false,
+        "firstName": "Recep",
+        "lastName": "Guven",
+        "email": "recep@hotmail.com",
+        "username": "vol123",
+        "password": "rec123123"
+    }
+    {
+        "isAdmin": true,
+        "firstName": "Recep Rojda",
+        "lastName": "Gunduz",
+        "email": "volkan@hotmail.com",
+        "username": "recvol123",
+        "password": "rec123123"
+    }
+*/
+
 //Create user based on Joi Validator
 router.post('/register', asyncmw(async (req, res, next) => {
     //Validate username
