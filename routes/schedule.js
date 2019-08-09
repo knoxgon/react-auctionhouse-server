@@ -53,7 +53,15 @@ router.post('/schedule', verifier, asyncmw(async (req, res, next) => {
             return res.status(401).send({ message: 'Only admins are allowed to make schedule changes for others.' });
         }
     } else {
-
+        req.body.isAdmin = req.decoded.isAdmin;
+        req.body.schedule_owner = req.decoded.user;
+        let schedule = new scheduleModel(req.body);
+        await schedule.save()
+            .then(() => {
+                res.sendStatus(201);
+            }).catch((err) => {
+                res.status(400).send(err.message);
+            });
     }
 }));
 
