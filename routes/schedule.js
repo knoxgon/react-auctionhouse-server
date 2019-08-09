@@ -33,14 +33,27 @@ let verifier = require('../auth/jwtVerifier');
 */
 
 router.post('/schedule', verifier, asyncmw(async (req, res, next) => {
-    const isAdmin = req.body.isAdmin;
-    const owner = req.body.schedule_owner;
-    const target_user = req.body.affected_user.username;
-    for (let task in req.body.affected_user.task) {
-        console.log(req.body.affected_user.task[task].task_title);
-        console.log(req.body.affected_user.task[task].description);
-        console.log(req.body.affected_user.task[task].date_start);
-        console.log(req.body.affected_user.task[task].date_expiration);
+    //If schedule owner is making changes for others
+    const schedule_owner = req.decoded.user;
+    const target_user = req.body.affected_user.username
+
+    if (target_user !== schedule_owner) {
+        //It must be an admin
+        if (req.decoded.isAdmin) {
+            req.body.isAdmin = req.decoded.isAdmin;
+            req.body.schedule_owner = req.decoded.user;
+            let schedule = new scheduleModel(req.body);
+            await schedule.save()
+                .then(() => {
+                    res.sendStatus(201);
+                }).catch((err) => {
+                    res.status(400).send(err.message);
+                });
+        } else {
+            return res.status(401).send({ message: 'Only admins are allowed to make schedule changes for others.' });
+        }
+    } else {
+
     }
 }));
 
