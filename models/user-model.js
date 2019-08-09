@@ -2,11 +2,13 @@ const rootURL = require('../dbRelation/root-db');
 const custDB = require('../dbRelation/customer-db');
 
 const mongoose = require('mongoose'),
-                 Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
+
+mongoose.set('useCreateIndex', true);
 
 const Joi = require('@hapi/joi');
 
-mongoose.connect(rootURL.link.url + custDB.custUrl.s_db);
+mongoose.connect(rootURL.link.url + custDB.custUrl.s_db, { useNewUrlParser: true });
 
 mongoose.connection.on('close', () => console.log('DB Close called'));
 
@@ -14,7 +16,7 @@ mongoose.connection.on('connected', () => console.log('DB Connect called'));
 
 mongoose.connection.on('error', () => console.log('DB Connection error'));
 
-const UserSchema = new Schema( {
+const UserSchema = new Schema({
     isAdmin: {
         type: Boolean,
         required: true
@@ -55,7 +57,7 @@ const UserSchema = new Schema( {
     }
 });
 
-UserSchema.methods.joiValidate = function(user){
+UserSchema.methods.joiValidate = function (user) {
     const schema = Joi.object().keys({
         isAdmin: Joi.boolean().required(),
         firstName: Joi.string().min(3).max(20).required(),
@@ -66,13 +68,15 @@ UserSchema.methods.joiValidate = function(user){
     });
 
     let retVal = Joi.validate(user, schema, { abortEarly: false });
-    if(retVal.error !== null){
-        if(retVal.error.name === 'ValidationError') return [false, retVal.error];
-    }else
+    if (retVal.error !== null) {
+        if (retVal.error.name === 'ValidationError') return [false, retVal.error];
+    } else
         return [true, 'OK'];
 
 };
 
 const UserModel = mongoose.model(custDB.custUrl.user, UserSchema, custDB.custUrl.user);
+
+
 
 module.exports = UserModel;
