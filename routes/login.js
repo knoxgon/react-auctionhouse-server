@@ -32,7 +32,7 @@ router.post('/login', asyncmw(async (req, res) => {
     }
     //Generate and send token within successful logon
     const token = jwtToken.sign(
-        { user: username.username },
+        { user: username.username, isAdmin: username.isAdmin },
         secretKey,
         { expiresIn: '1h' });
 
