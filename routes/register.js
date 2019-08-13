@@ -10,19 +10,17 @@ const asyncmw = require('../utils/async-middleware');
 
 /*
     {
-        "isAdmin": false,
         "firstName": "Recep",
-        "lastName": "Guven",
+        "lastName": "Gunduz",
         "email": "recep@hotmail.com",
         "username": "vol123",
         "password": "rec123123"
     }
     {
-        "isAdmin": true,
-        "firstName": "Recep Rojda",
-        "lastName": "Gunduz",
+        "firstName": "Volkan",
+        "lastName": "Guven",
         "email": "volkan@hotmail.com",
-        "username": "recvol123",
+        "username": "rec123",
         "password": "rec123123"
     }
 */
@@ -30,7 +28,7 @@ const asyncmw = require('../utils/async-middleware');
 //Create user based on Joi Validator
 router.post('/register', asyncmw(async (req, res, next) => {
     //Validate username
-    let result = usernameCheck(req.body.username);
+    let result = usernameCheck.validateUsername(req.body.username);
     //Validate password
     if (req.body.password.length < 8) {
         return res.status(400).send({ message: 'Password length must be 8 or more characters' });

@@ -9,6 +9,17 @@ const asyncmw = require('../utils/async-middleware');
 
 const bcrypt = require('bcrypt');
 
+/*
+{
+        "firstName": "Billy",
+        "lastName": "Jones",
+        "email": "neutro_patrol@ssu.menningrad.co.uk",
+        "username": "aritros200x",
+        "password": "deimyaloaritmet4fa7@"
+}
+
+*/
+
 router.post('/login', asyncmw(async (req, res) => {
     let username;
 

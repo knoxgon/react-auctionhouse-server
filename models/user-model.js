@@ -17,10 +17,6 @@ mongoose.connection.on('connected', () => console.log('DB Connect called'));
 mongoose.connection.on('error', () => console.log('DB Connection error'));
 
 const UserSchema = new Schema({
-    isAdmin: {
-        type: Boolean,
-        required: true
-    },
     firstName: {
         type: String,
         required: true,
@@ -59,7 +55,6 @@ const UserSchema = new Schema({
 
 UserSchema.methods.joiValidate = function (user) {
     const schema = Joi.object().keys({
-        isAdmin: Joi.boolean().required(),
         firstName: Joi.string().min(3).max(20).required(),
         lastName: Joi.string().min(3).max(30).required(),
         username: Joi.string().min(6).max(16).required(),

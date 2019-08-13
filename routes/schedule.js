@@ -8,61 +8,100 @@ let verifier = require('../auth/jwtVerifier');
 /*
     JSON Example
 
+    //schedule_title && schedule_owner combination unique
     {
-	"isAdmin": true,
-	"schedule_owner": "whoiam",
-	"affected_user": {
-		"username": "target_user",
-		"task": [
-				{
-					"task_title": "notitle",
-					"description": "make sales complete",
-					"date_start": "2019-05-30",
-					"date_expiration": "2019-06-10"
-				},
-				{
-					"task_title": "any title",
-					"description": "test things",
-					"date_start": "2019-07-15",
-					"date_expiration": "2019-07-16"
-				}
-			]
-	}
+    "schedule_title": "My company schedule",
+    "tasks":
+        {
+            "assigned_users": [
+                {
+                    "user": "aUserName"
+                },
+                {
+                    "user": "myname"
+                }
+            ],
+            "task_title": "notitle",
+            "description": "make sales complete",
+            "date_start": "2019-05-30",
+            "date_expiration": "2019-06-10"
+        }
+}
 }
 
 */
 
-router.post('/schedule', verifier, asyncmw(async (req, res, next) => {
-    //If schedule owner is making changes for others
-    const schedule_owner = req.decoded.user;
-    const target_user = req.body.affected_user.username
+//Get all schedules
+router.get('/schedules', verifier, asyncmw(async (req, res, next) => {
+    //Get all schedules for the current user
+    const user = req.decoded.user;
+    await scheduleModel.find({ schedule_owner: user },
+        { _id: 0, __v: 0, "affected_user._id": 0, "affected_user.task._id": 0 },
+        (err, doc) => {
+            res.status(200).send(doc);
+        })
+}));
 
-    if (target_user !== schedule_owner) {
-        //It must be an admin
-        if (req.decoded.isAdmin) {
-            req.body.isAdmin = req.decoded.isAdmin;
-            req.body.schedule_owner = req.decoded.user;
-            let schedule = new scheduleModel(req.body);
-            await schedule.save()
-                .then(() => {
-                    res.sendStatus(201);
-                }).catch((err) => {
-                    res.status(400).send(err.message);
-                });
-        } else {
-            return res.status(401).send({ message: 'Only admins are allowed to make schedule changes for others.' });
-        }
-    } else {
-        req.body.isAdmin = req.decoded.isAdmin;
-        req.body.schedule_owner = req.decoded.user;
-        let schedule = new scheduleModel(req.body);
-        await schedule.save()
-            .then(() => {
-                res.sendStatus(201);
-            }).catch((err) => {
-                res.status(400).send(err.message);
-            });
+router.post('/schedule/create', verifier, asyncmw(async (req, res, next) => {
+    req.body.tasks = [];
+    let schedule_title = req.body.schedule_title;
+    let schedule_owner = req.body.schedule_owner = req.decoded.user;
+
+    if (!schedule_title) {
+        return res.status(400).send('Schedule title must be provided.')
     }
+
+    let schedule = new scheduleModel(req.body);
+
+    await scheduleModel
+        .findOne(
+            {
+                $and: [
+                    { schedule_title: schedule_title },
+                    { schedule_owner: schedule_owner }]
+            }, (err, result) => {
+                if (err) {
+                    res.status(500).send('Internal Error');
+                }
+                if (!result) {
+                    schedule.save().then((doc) => {
+                        res.status(201).send('Table created.');
+                    });
+                }
+                else {
+                    res.status(412).send('A table with that name exists. Pick a new name.');
+                }
+            });
+}));
+
+router.post('/schedule/create/task', verifier, asyncmw(async (req, res, next) => {
+    let schedule_title = req.body.schedule_title;
+    let schedule_owner = req.body.schedule_owner = req.decoded.user;
+
+    if (!schedule_title) {
+        return res.status(400).send('Schedule title must be provided.')
+    }
+
+    await scheduleModel
+        .updateOne(
+            {
+                $and: [
+                    { schedule_title: schedule_title },
+                    { schedule_owner: schedule_owner }]
+            }, {
+                $push: {
+                    "tasks": {
+                        task_title: req.body.tasks.task_title,
+                        description: req.body.tasks.description,
+                        date_start: req.body.tasks.date_start,
+                        date_expiration: req.body.tasks.date_expiration
+                    }
+                }
+            })
+        .exec((err, story) => {
+            if (err) return res.send(err);
+            res.status(200).send(story);
+        });
 }));
 
 module.exports = router;

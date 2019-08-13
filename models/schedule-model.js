@@ -16,7 +16,16 @@ mongoose.connection.on('connected', () => console.log('DB Connect called'));
 
 mongoose.connection.on('error', () => console.log('DB Connection error'));
 
-const TaskSchema = new Schema({
+const AssignedUsers = new Schema({
+    user: {
+        type: String,
+        lowercase: true,
+        trim: true
+    }
+});
+
+const TasksSchema = new Schema({
+    assigned_users: [AssignedUsers],
     task_title: {
         type: String,
         lowercase: true,
@@ -24,13 +33,11 @@ const TaskSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
         lowercase: true,
         trim: true
     },
     date_start: {
         type: Date,
-        required: true,
         default: Date.now
     },
     date_expiration: {
@@ -38,31 +45,20 @@ const TaskSchema = new Schema({
     }
 });
 
-const AffectedUser = new Schema({
-    username: {
-        type: String,
-        required: true,
-        lowercase: true,
-        trim: true
-    },
-    task: [TaskSchema]
-});
-
 const ScheduleSchema = new Schema({
-    isAdmin: {
-        type: Boolean,
-        required: true
-    },
     schedule_owner: {
         type: String,
         required: true,
         lowercase: true,
         trim: true
     },
-    affected_user: {
-        type: AffectedUser,
-        required: true
-    }
+    schedule_title: {
+        type: String,
+        required: true,
+        lowercase: true,
+        trim: true
+    },
+    tasks: [TasksSchema]
 });
 
 ScheduleSchema.methods.joiValidate = function (user) {
@@ -81,5 +77,6 @@ ScheduleSchema.methods.joiValidate = function (user) {
 };
 
 const SchedModel = mongoose.model(scheduleDB.custUrl.schedule, ScheduleSchema, scheduleDB.custUrl.schedule);
+
 
 module.exports = SchedModel;
