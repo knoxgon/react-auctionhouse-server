@@ -38,6 +38,7 @@ router.get('/schedules', verifier, asyncmw(async (req, res, next) => {
   await scheduleModel.find({ schedule_owner: user },
     { _id: 0, __v: 0, "affected_user._id": 0, "affected_user.task._id": 0 },
     (err, doc) => {
+      if (err) return res.status(500).send(err);
       res.status(200).send(doc);
     })
 }));
@@ -101,7 +102,7 @@ router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
   const schedule_owner = req.body.schedule_owner = req.decoded.user;
   const date_expiration = new Date(req.body.tasks.date_expiration);
 
-  if (!req.body.tasks.date_start){
+  if (!req.body.tasks.date_start) {
     req.body.tasks.date_start = Date.now();
   }
 
@@ -109,7 +110,7 @@ router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
     return res.status(400).send('Schedule title must be provided.')
   }
 
-  if (date_expiration < req.body.tasks.date_start ){
+  if (date_expiration < req.body.tasks.date_start) {
     return res.status(400).send('Date expiration must be greater than date start.')
   }
 
@@ -138,7 +139,6 @@ router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
 router.post('/schedule/add/user', verifier, asyncmw(async (req, res, next) => {
   const schedule_owner = req.decoded.user;
   const schedule_title = req.body.schedule_title;
-  const userModel = require('../models/user-model');
 
   await scheduleModel.updateOne({
     $and: [
