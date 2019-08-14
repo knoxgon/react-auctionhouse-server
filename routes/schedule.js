@@ -131,13 +131,18 @@ router.post('/schedule/add/user', verifier, asyncmw(async (req, res, next) => {
   await scheduleModel.updateOne({
     $and: [
       { schedule_title: schedule_title },
-      { schedule_owner: schedule_owner }
+      { schedule_owner: schedule_owner },
+      {
+        tasks: {
+          $elemMatch: {
+            "task_title": req.body.tasks.task_title
+          }
+        }
+      }
     ]
   }, {
-      tasks: {
-        $elemMatch: {
-          "task_title": req.body.tasks.task_title
-        }
+      $addToSet: {
+        "tasks.$.assigned_users": req.body.tasks.assigned_users
       }
     },
     (err, doc) => {
