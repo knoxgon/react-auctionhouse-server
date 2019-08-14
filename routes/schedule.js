@@ -42,8 +42,11 @@ router.get('/schedules', verifier, asyncmw(async (req, res, next) => {
     })
 }));
 
-
-
+/*
+{
+	"schedule_title": "my random title_1"
+}
+*/
 router.post('/schedule/add', verifier, asyncmw(async (req, res, next) => {
   req.body.tasks = [];
   let schedule_title = req.body.schedule_title;
