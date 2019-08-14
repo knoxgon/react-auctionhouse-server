@@ -29,7 +29,8 @@ const TasksSchema = new Schema({
     task_title: {
         type: String,
         lowercase: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     description: {
         type: String,
@@ -42,7 +43,7 @@ const TasksSchema = new Schema({
     },
     date_expiration: {
         type: Date
-    }
+    },
 });
 
 const ScheduleSchema = new Schema({
