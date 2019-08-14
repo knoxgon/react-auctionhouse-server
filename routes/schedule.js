@@ -108,7 +108,7 @@ router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
           { schedule_title: schedule_title },
           { schedule_owner: schedule_owner }],
       }, {
-        $push: {
+        $addToSet: {
           "tasks": {
             task_title: req.body.tasks.task_title,
             description: req.body.tasks.description,

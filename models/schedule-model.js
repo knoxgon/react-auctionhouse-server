@@ -61,18 +61,27 @@ const ScheduleSchema = new Schema({
     tasks: [TasksSchema]
 });
 
-ScheduleSchema.methods.joiValidate = function (user) {
+ScheduleSchema.methods.joiValidate = function (sched) {
     const schema = Joi.object().keys({
-        isAdmin: Joi.boolean().required(),
         schedule_owner: Joi.string().required(),
-        affected_user: Joi.object().key
+        schedule_title: Joi.string(),
+        tasks: Joi.object().keys({
+            task_title: Joi.string(),
+            description: Joi.string(),
+            date_start: Joi.date(),
+            date_expiration: Joi.date().greater(Joi.ref('date_start')),
+            assigned_users: Joi.object().keys({
+                user: Joi.string()
+            })
+        })
     });
 
-    let retVal = Joi.validate(user, schema, { abortEarly: false });
+    let retVal = Joi.validate(sched, schema, { abortEarly: false });
     if (retVal.error !== null) {
         if (retVal.error.name === 'ValidationError') return [false, retVal.error];
-    } else
+    } else {
         return [true, 'OK'];
+    }
 
 };
 
