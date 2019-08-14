@@ -94,11 +94,20 @@ router.post('/schedule/add', verifier, asyncmw(async (req, res, next) => {
 */
 
 router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
-  let schedule_title = req.body.schedule_title;
-  let schedule_owner = req.body.schedule_owner = req.decoded.user;
+  const schedule_title = req.body.schedule_title;
+  const schedule_owner = req.body.schedule_owner = req.decoded.user;
+  const date_expiration = new Date(req.body.tasks.date_expiration);
+
+  if (!req.body.tasks.date_start){
+    req.body.tasks.date_start = Date.now();
+  }
 
   if (!schedule_title) {
     return res.status(400).send('Schedule title must be provided.')
+  }
+
+  if (date_expiration < req.body.tasks.date_start ){
+    return res.status(400).send('Date expiration must be greater than date start.')
   }
 
   await scheduleModel
@@ -109,11 +118,11 @@ router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
           { schedule_owner: schedule_owner }],
       }, {
         $addToSet: {
-          "tasks": {
+          tasks: {
             task_title: req.body.tasks.task_title,
             description: req.body.tasks.description,
             date_start: req.body.tasks.date_start,
-            date_expiration: req.body.tasks.date_expiration
+            date_expiration: date_expiration
           }
         }
       })
@@ -126,7 +135,7 @@ router.post('/schedule/add/task', verifier, asyncmw(async (req, res, next) => {
 router.post('/schedule/add/user', verifier, asyncmw(async (req, res, next) => {
   const schedule_owner = req.decoded.user;
   const schedule_title = req.body.schedule_title;
-
+  const userModel = require('../models/user-model');
 
   await scheduleModel.updateOne({
     $and: [
