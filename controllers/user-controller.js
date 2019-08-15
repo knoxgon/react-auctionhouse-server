@@ -1,4 +1,4 @@
-let service = require('../services/user-service')
+const service = require('../services/user-service')
 
 module.exports.fetchUsers = async function (req, res, next) {
   await service.getUsers()
