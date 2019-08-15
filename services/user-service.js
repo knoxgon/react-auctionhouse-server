@@ -12,13 +12,13 @@ module.exports.getUsers = async function () {
 }
 
 //Find user based on the username or email
-module.exports.findUser = async function (param) {
+module.exports.findUser = async function (param, _excludeFields) {
   return new Promise((resolve, reject) => {
     userModel.findOne(
       { $or: [{ email: param }, { username: param }] },
-      excludeFields, (err, fin) => {
-        if (!fin) reject({ "failure": "User not exists." });
-        return resolve(fin);
+      _excludeFields, (err, fin) => {
+        if (!fin) return reject({ "failure": "User not exists." });
+        resolve(fin);
       }
     )
   });
