@@ -10,7 +10,7 @@ module.exports.fetchUsers = async function (req, res, next) {
 }
 
 module.exports.fetchOneUser = async function (req, res, next) {
-  await service.findUser(req.params.username)
+  await service.findUser(req.params.username, { password: 0, _id: 0, __v: 0 })
     .then((result) => {
       res.send(result);
     }).catch((err) => {
