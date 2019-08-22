@@ -50,6 +50,10 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    coc: {
+        type: String,
+        required: true
     }
 });
 
@@ -60,6 +64,7 @@ UserSchema.methods.joiValidate = function (user) {
         username: Joi.string().min(6).max(16).required(),
         email: Joi.string().email().required(),
         password: Joi.string().required(),
+        coc: Joi.string().valid('client', 'company').required()
     });
 
     let retVal = Joi.validate(user, schema, { abortEarly: false });
