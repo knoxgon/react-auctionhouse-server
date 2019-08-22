@@ -10,18 +10,20 @@ const asyncmw = require('../utils/async-middleware');
 
 /*
     {
-        "firstName": "Recep",
-        "lastName": "Gunduz",
-        "email": "recep@hotmail.com",
-        "username": "vol123",
-        "password": "rec123123"
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john_doe@hotmail.com",
+        "username": "jd_95",
+        "password": "#@589142fa9",
+        "coc": "client"
     }
     {
-        "firstName": "Volkan",
-        "lastName": "Guven",
-        "email": "volkan@hotmail.com",
-        "username": "rec123",
-        "password": "rec123123"
+        "firstName": "Uthas",
+        "lastName": "Wilson",
+        "email": "uw@gmail.com",
+        "username": "utwill",
+        "password": "%)kda753z7,
+        "coc": "company"
     }
 */
 
