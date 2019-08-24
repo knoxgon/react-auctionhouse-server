@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
+var clinput = require('./routes/clinput');
 var scheduleRouter = require('./routes/schedule');
 var notFoundRoute = require('./routes/404');
 var registerRouter = require('./routes/register');
@@ -39,6 +40,7 @@ app.use(usersRouter);
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(scheduleRouter);
+app.use(clinput);
 app.use('**', notFoundRoute);
 
 // catch 404 and forward to error handler

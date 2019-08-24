@@ -8,7 +8,7 @@ mongoose.set('useCreateIndex', true);
 
 const Joi = require('@hapi/joi');
 
-mongoose.connect(rootURL.link.url + custDB.custUrl.s_db, { useNewUrlParser: true });
+mongoose.createConnection(rootURL.link.url + custDB.custUrl.s_db, { useNewUrlParser: true });
 
 mongoose.connection.on('close', () => console.log('DB Close called'));
 

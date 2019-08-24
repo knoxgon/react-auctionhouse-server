@@ -6,19 +6,19 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@hapi/joi": "^15.0.3",
+    "@hapi/joi": "^15.1.1",
     "adm-zip": "^0.4.13",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "csv": "^5.1.1",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.16.4",
     "express-session": "^1.16.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.2.6",
-    "mongoose": "^5.5.11",
+    "mongodb": "^3.3.0",
+    "mongoose": "^5.6.10",
     "morgan": "~1.9.1",
     "nyc": "^14.1.1",
     "pug": "^2.0.3",
@@ -26,5 +26,17 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.0"
-  }
+  },
+  "description": "backend, nodejs, mongodb, mongoose, express, expressjs, Joi, JoiValidator, node, jwt, jsonwebtoken",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knoxgon/effort-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knoxgon/effort-backend/issues"
+  },
+  "homepage": "https://github.com/knoxgon/effort-backend#readme"
 }

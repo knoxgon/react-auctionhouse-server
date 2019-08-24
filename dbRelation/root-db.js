@@ -8,6 +8,7 @@ const rawData = JSON.parse(data);
 
 //Get root link
 const url = rawData.link.url + rawData.link.c_port;
+console.log(rawData.link.url + rawData.link.c_port)
 
 exports.link = {
     "url": url,

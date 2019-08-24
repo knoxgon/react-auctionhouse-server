@@ -13,7 +13,7 @@ const asyncmw = require('../utils/async-middleware');
         "firstName": "John",
         "lastName": "Doe",
         "email": "john_doe@hotmail.com",
-        "username": "jd_95",
+        "username": "jd1995",
         "password": "#@589142fa9",
         "coc": "client"
     }
@@ -22,8 +22,16 @@ const asyncmw = require('../utils/async-middleware');
         "lastName": "Wilson",
         "email": "uw@gmail.com",
         "username": "utwill",
-        "password": "%)kda753z7,
+        "password": "%)kda753z7",
         "coc": "company"
+    }
+    {
+        "firstName": "Billy",
+        "lastName": "Jones",
+        "email": "neutro_patrol@ssu.menningrad.co.uk",
+        "username": "aritros200x",
+        "password": "deimyaloaritmet4fa7@",
+        "coc": "client"
     }
 */
 
