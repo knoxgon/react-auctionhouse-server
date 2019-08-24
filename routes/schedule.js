@@ -8,7 +8,6 @@ let verifier = require('../auth/jwtVerifier');
 /*
     JSON Example
 
-    //schedule_title && schedule_owner combination unique
     {
     "schedule_title": "My company schedule",
     "tasks":
@@ -26,7 +25,7 @@ let verifier = require('../auth/jwtVerifier');
             "date_start": "2019-05-30",
             "date_expiration": "2019-06-10"
         }
-}
+    }
 }
 
 */

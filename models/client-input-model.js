@@ -44,7 +44,7 @@ ClientInputSchema.methods.joiValidate = function (inputs) {
     username: Joi.string().required(),
     productName: Joi.string().required(),
     branch: Joi.string().required(),
-    terms: Joi.string().required(),
+    terms: Joi.string().valid("fritt från lager", "bygg", "kök").required(),
     amount: Joi.number().required()
   });
 
