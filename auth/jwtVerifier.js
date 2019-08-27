@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const secKey = require('../config').secret.key;
 
 function tokenVerify(req, res, next) {
+  console.log(req.headers['authorization']);
   let header = req.body.token || req.query.token || req.headers['authorization'];
   try {
     if (typeof header !== "undefined") {
