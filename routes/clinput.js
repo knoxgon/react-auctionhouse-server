@@ -36,7 +36,7 @@ router.post('/clinput', verifier, asyncmw(async (req, res, next) => {
   }
 }));
 
-router.get('/clinput', asyncmw(async (req, res, next) => {
+router.get('/clinput', verifier, asyncmw(async (req, res, next) => {
   //Get all inputs
   await clinputModel.find({},
     { _id: 0, __v: 0 },
