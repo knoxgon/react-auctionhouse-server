@@ -3,13 +3,14 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
-var clinput = require('./routes/clinput');
-var scheduleRouter = require('./routes/schedule');
-var notFoundRoute = require('./routes/404');
-var registerRouter = require('./routes/register');
+var indexRouter = require('./company/index');
+var clientRouter = require('./company/client');
+var companyRouter = require('./company/company');
+var loginRouter = require('./company/login');
+var clinput = require('./company/clinput');
+var scheduleRouter = require('./company/schedule');
+var notFoundRoute = require('./company/404');
+var registerRouter = require('./company/register');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -36,7 +37,8 @@ app.use(function (req, res, next) {
 });
 
 app.use(indexRouter);
-app.use(usersRouter);
+app.use(clientRouter);
+app.use(companyRouter);
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(scheduleRouter);
