@@ -2,14 +2,13 @@ const jwt = require('jsonwebtoken');
 const secKey = require('../config').secret.key;
 
 function tokenVerify(req, res, next) {
-  console.log(req.headers['authorization']);
   let header = req.body.token || req.query.token || req.headers['authorization'];
   try {
     if (typeof header !== "undefined") {
       let token = header.split(' ')[1];
       jwt.verify(token, secKey, (err, auth) => {
         if (err)
-          return res.status(403).send({ message: "You are not authorized" });
+          return res.status(401).send({ message: "You are not authorized" });
         req.decoded = auth;
         next();
       });
