@@ -46,10 +46,6 @@ const CompanySchema = new Schema({
         trim: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true
-    },
     address: {
         type: String,
         required: true,
@@ -60,6 +56,10 @@ const CompanySchema = new Schema({
         required: true,
         trim: true
     },
+    password: {
+        type: String,
+        required: true
+    },
     branches: [{
       type: String
     }]
@@ -69,15 +69,15 @@ CompanySchema.methods.joiValidate = function (company) {
     const schema = Joi.object().keys({
       corporateIdentityNumber: Joi.string().required(),
       companyName: Joi.string().required(),
-      contactFirstName: Joi.string().min(3).max(30).required(),
-      contactLastName: Joi.string().min(3).max(30).required(),
+      contactFirstName: Joi.string().min(2).max(30).required(),
+      contactLastName: Joi.string().min(2).max(30).required(),
       companyEmail: Joi.string().email().required(),
-      password: Joi.string().required(),
       address: Joi.string().required(),
       billingAddress: Joi.string().required(),
       branches: Joi.object().keys({
-        branches: Joi.object().valid('kök', 'bygg', 'mat', 'it', 'elektronisk').required()
-      })
+        branch: Joi.object().valid('kök', 'bygg', 'mat', 'it', 'elektronisk').required()
+      }),
+      password: Joi.string().required()
     });
 
     let retVal = Joi.validate(company, schema, { abortEarly: false });

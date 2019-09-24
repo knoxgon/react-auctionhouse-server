@@ -43,8 +43,8 @@ ClientInputSchema.methods.joiValidate = function (inputs) {
   const schema = Joi.object().keys({
     username: Joi.string().required(),
     productName: Joi.string().required(),
-    branch: Joi.string().required(),
-    terms: Joi.string().valid("fritt från lager", "bygg", "kök").required(),
+    branch: Joi.string().required().valid("elektronik", "bygg", "kök"),
+    terms: Joi.string().valid("fritt vårt lager", "garanti").required(),
     amount: Joi.number().required()
   });
 

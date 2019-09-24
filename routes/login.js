@@ -7,15 +7,16 @@ const login_ctrl = require('../controllers/login-controller')
 
   company: {
     {
-      "companyEmail": "angels@allabolag.se",
+      "email": "angels@allabolag.se",
       "password": "weArenotheretoGetAnything58129"
     },
     {
-      "companyEmail": "admin.office@bo.verkstad.com",
+      "email": "admin.office@bo.verkstad.com",
       "password": "298@8FAUHJ4Tohrq1"
     }
   }
 
+  //either email or username
   client: {
     {
       "email": "neutro_patrol@ssu.menningrad.co.uk",

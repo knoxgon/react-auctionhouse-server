@@ -65,15 +65,15 @@ router.post('/register/client', asyncmw(async (req, res, next) => {
                 res.sendStatus(201);
             }).catch((err) => res.status(400).send(err.errmsg));
         } else {
-            //Send error list
-            let arrs = clientResult[1].message.split('. ');
+/*            let arrs = clientResult[1].message.split('. ');
             let newList = [];
             for (var i = 0; i < arrs.length; i++) {
                 newList.push(JSON.stringify(
                     { errorMessage: arrs[i] })
                     .replace(/[\\'"]+/g, ''));
             }
-            res.status(400).send(newList);
+            */
+            res.status(400).send({message: 'Check your input'});
         }
     } else {
         res.status(400).send({ message: 'username cannot contain special characters' });
@@ -82,28 +82,35 @@ router.post('/register/client', asyncmw(async (req, res, next) => {
 
 //Create company based on Joi Validator
 router.post('/register/company', asyncmw(async (req, res, next) => {
+
+    try {
+        console.log(req.body);
+
     //Validate password
-    if (req.body.password.length < 8) {
-        return res.status(400).send({ message: 'Password length must be 8 or more characters' });
-    }
-    req.body.password = bcrypt.hashSync(req.body.password, 10);
-    let company = new companyModel(req.body);
-    //Validate credentials
-    let companyResult = company.joiValidate(req.body);
-    if (companyResult[0]) {
-        await company.save().then(_ => {
-            res.sendStatus(201);
-        }).catch((err) => res.status(400).send(err.errmsg));
-    } else {
-        //Send error list
-        let arrs = companyResult[1].message.split('. ');
-        let newList = [];
-        for (var i = 0; i < arrs.length; i++) {
-            newList.push(JSON.stringify(
-                { errorMessage: arrs[i] })
-                .replace(/[\\'"]+/g, ''));
+        if (req.body.password.length < 8) {
+            return res.status(400).send({ message: 'Password length must be 8 or more characters' });
         }
-        res.status(400).send(newList);
+        req.body.password = bcrypt.hashSync(req.body.password, 10);
+        let company = new companyModel(req.body);
+        //Validate credentials
+        let companyResult = company.joiValidate(req.body);
+        if (companyResult[0]) {
+            await company.save().then(_ => {
+                res.status(201).send({message: 'Profile successfully created.'});
+            }).catch((err) => res.status(400).send({message: err.errmsg}));
+        } else {
+            //Send error list
+            let arrs = companyResult[1].message.split('. ');
+            let newList = [];
+            for (var i = 0; i < arrs.length; i++) {
+                newList.push(JSON.stringify(
+                    { errorMessage: arrs[i] })
+                    .replace(/[\\'"]+/g, ''));
+            }
+            res.status(400).send(newList);
+        }
+    } catch(err) {
+        console.log(err);
     }
 }));
 

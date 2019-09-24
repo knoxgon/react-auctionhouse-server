@@ -9,28 +9,44 @@ let verifier = require('../auth/jwtVerifier');
     {
         "productName": "golv tapet",
         "branch": "bygg",
-        "terms": "fritt från lager",
+        "terms": "fritt vårt lager",
         "amount": "20"
     }
 */
 
 router.post('/clinput', verifier, asyncmw(async (req, res, next) => {
   req.body.username = req.decoded.user;
+  if(!req.body.username) {
+    return res.status(403).send({message: 'You are not authorized to make this transaction.'});
+  }  
   let client_input = new clinputModel(req.body);
   //Validate credentials
   let results = client_input.joiValidate(req.body);
   if (results[0]) {
     await client_input.save().then(input => {
-      res.sendStatus(201);
+      res.status(201).send({message: 'Offert successfully created.'});
     })
   } else {
     //Send error list
     let arrs = results[1].message.split('. ');
     let newList = [];
-    for (var i = 0; i < arrs.length; i++) {
-      newList.push(JSON.stringify(
-        { errorMessage: arrs[i] })
-        .replace(/[\\'"]+/g, ''));
+    for (let i = 0; i < arrs.length; i++) {
+      if(arrs[i].includes('productName')) {
+         newList.push(JSON.stringify(
+           { message: 'Please fill the product description.' }));
+       }
+       else if(arrs[i].includes('branch')) {
+         newList.push(JSON.stringify(
+           { message: 'Please select a branch.' }));
+       }
+       else if(arrs[i].includes('terms')) {
+        newList.push(JSON.stringify(
+          { message: 'Please choose the purchase condition.' }));
+      }
+      else if(arrs[i].includes('amount')) {
+        newList.push(JSON.stringify(
+          { message: 'Please select the amount.' }));
+      }
     }
     res.status(400).send(newList);
   }
