@@ -23,7 +23,8 @@
     "nyc": "^14.1.1",
     "pug": "^2.0.3",
     "superagent": "^5.0.6",
-    "lodash": ">=4.17.19"
+    "lodash": ">=4.17.19",
+    "handlebars": ">=4.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.0"
