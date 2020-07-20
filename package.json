@@ -28,7 +28,8 @@
     "mongoose": ">=5.7.5"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0"
+    "nodemon": "^1.19.0",
+    "minimist": ">=1.2.3"
   },
   "description": "backend, nodejs, mongodb, mongoose, express, expressjs, Joi, JoiValidator, node, jwt, jsonwebtoken",
   "main": "app.js",
